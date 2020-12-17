@@ -1,17 +1,17 @@
-{% set version = "2.0.8" %}
+{% set version = "2.0.11" %}
 
 package:
   name: emscripten
-  version: '{{ version }}'
+  version: {{ version }}
 
 source:
   url: https://github.com/emscripten-core/emscripten/archive/{{ version }}.tar.gz
-  sha256: 609a7ecea954821efbcc55bf5ad88dd03ba4f836c703b8ad2e37c243329174a6
+  sha256: 92389951c46af18921547aae96977150c220ba8a2cd73dd1d0c94e031988eff4
   patches:
     - remove_revision_file_setting.patch
 
 build:
-  number: 1
+  number: 0
 
 requirements:
   build:
