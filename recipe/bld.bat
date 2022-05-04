@@ -19,10 +19,11 @@ CD %LIBRARY_PREFIX%\lib\emscripten-%PKG_VERSION%\
 CALL emcc.bat
 IF ERRORLEVEL 1 EXIT 1
 
+emcc --generate-config
+
 python %RECIPE_DIR%\fix_emscripten_config.py
 IF ERRORLEVEL 1 EXIT 1
 
 CD %LIBRARY_PREFIX%\lib\emscripten-%PKG_VERSION%\
 npm install
 IF ERRORLEVEL 1 EXIT 1
-

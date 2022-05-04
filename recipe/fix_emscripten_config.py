@@ -16,7 +16,7 @@ print("Reading path: ", path)
 with open(path, 'r') as fi:
     lines = fi.readlines()
 
-out_lines = []
+out_lines = ["import os"]
 for line in lines:
 	if line.startswith("BINARYEN_ROOT"):
 		p = prefix.replace('\\', '/')
