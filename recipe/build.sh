@@ -19,5 +19,9 @@ popd
 
 rm -rf $PREFIX/lib/emscripten-$PKG_VERSION/tests
 
+# build the caches
+echo "int main() {};" > asd.c
+emcc asd.c
+
 # We should probably not do this
 # embuilder build ALL

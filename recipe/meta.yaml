@@ -11,7 +11,7 @@ source:
     - remove_revision_file_setting.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
@@ -22,12 +22,13 @@ requirements:
     - nodejs
   run:
     - python
-    - binaryen
+    - {{ pin_compatible("binaryen", max_pin="x") }}
     - nodejs
-    - lld
-    - clang
-    - clangxx
-    - llvm-tools
+    # See https://github.com/emscripten-core/emscripten/blob/2.0.8/tools/shared.py#L40
+    - lld        12.*
+    - clang      12.*
+    - clangxx    12.*
+    - llvm-tools 12.*
     # for google closure compiler
     - zlib
 
