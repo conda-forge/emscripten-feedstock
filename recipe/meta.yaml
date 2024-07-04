@@ -11,11 +11,12 @@ source:
     - remove_revision_file_setting.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
     - {{ compiler('cxx') }}  # node modules need to compile native extensions
+    - {{ stdlib("c") }}
   host:
     - python
     - binaryen
