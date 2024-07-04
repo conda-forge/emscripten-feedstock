@@ -16,6 +16,7 @@ build:
 requirements:
   build:
     - {{ compiler('cxx') }}  # node modules need to compile native extensions
+    - {{ stdlib("c") }}
   host:
     - python
     - binaryen
