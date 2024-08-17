@@ -2,7 +2,7 @@
 
 package:
   name: emscripten
-  version: '{{ version }}'
+  version: {{ version }}
 
 source:
   url: https://github.com/emscripten-core/emscripten/archive/{{ version }}.tar.gz
@@ -37,9 +37,11 @@ requirements:
     - zlib
 
 test:
+  files:
+    - testfile.c
   commands:
     - emcc --help
-    - emcc $RECIPE_DIR/testfile.c
+    - emcc ./testfile.c
     - node a.out.js
 
 about:

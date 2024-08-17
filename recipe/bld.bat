@@ -1,3 +1,4 @@
+@echo on
 
 SET "BINARYEN=%PREFIX%"
 
