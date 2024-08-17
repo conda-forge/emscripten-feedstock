@@ -1,0 +1,22 @@
+From ffcfeb701c9311b6f66f47b3d998334dc4d23ad6 Mon Sep 17 00:00:00 2001
+From: Wolf Vollprecht <w.vollprecht@gmail.com>
+Date: Tue, 10 Nov 2020 00:33:10 +0100
+Subject: [PATCH] remove revision file setting
+
+---
+ tools/install.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/install.py b/tools/install.py
+index 0e40fc66c..0f3a04156 100755
+--- a/tools/install.py
++++ b/tools/install.py
+@@ -97,7 +97,7 @@ def main():
+   logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO)
+   os.makedirs(target)
+   copy_emscripten(target)
+-  add_revision_file(target)
++  # add_revision_file(target)
+   return 0
+ 
+ 

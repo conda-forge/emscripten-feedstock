@@ -8,7 +8,7 @@ source:
   url: https://github.com/emscripten-core/emscripten/archive/{{ version }}.tar.gz
   sha256: b07bf8328eac2ac59957dac27fc8e91f5ac4d3f39354710b798f7e552c33d430
   patches:
-    - remove_revision_file_setting.patch
+    - patches/0001-remove-revision-file-setting.patch
 
 build:
   number: 0
