@@ -10,6 +10,9 @@ rm $PREFIX/lib/emscripten-$PKG_VERSION/conda_build.sh
 
 python $RECIPE_DIR/link_bin.py
 
+# make emcc etc. executable
+chmod -R +x $PREFIX/lib/emscripten-$PKG_VERSION
+
 emcc --generate-config
 
 python $RECIPE_DIR/fix_emscripten_config.py
