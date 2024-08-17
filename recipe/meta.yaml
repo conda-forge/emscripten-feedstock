@@ -44,7 +44,7 @@ test:
 
 about:
   home: https://emscripten.org/
-  license: MIT OR NCAS
+  license: MIT OR NCSA
   license_file: LICENSE
   summary: Emscripten compiles C and C++ to WebAssembly using LLVM and Binaryen. Emscripten output can run on the Web, in Node.js, and in wasm runtimes.
   dev_url: https://github.com/emscripten-core/emscripten
