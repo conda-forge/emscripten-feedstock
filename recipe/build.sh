@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-export BINARYEN=$PREFIX
+export EM_BINARYEN_ROOT=$PREFIX
 
 python tools/install.py $PREFIX/lib/emscripten-$PKG_VERSION/
 # remove leftovers
