@@ -1,5 +1,6 @@
+@echo on
 
-SET "BINARYEN=%PREFIX%"
+SET "EM_BINARYEN_ROOT=%PREFIX%"
 
 python tools\install.py %LIBRARY_PREFIX%\lib\emscripten-%PKG_VERSION%\
 IF ERRORLEVEL 1 EXIT 1
@@ -16,7 +17,7 @@ python %RECIPE_DIR%\link_bin.py
 IF ERRORLEVEL 1 EXIT 1
 
 CD %LIBRARY_PREFIX%\lib\emscripten-%PKG_VERSION%\
-CALL emcc.bat
+CALL emcc.bat --generate-config
 IF ERRORLEVEL 1 EXIT 1
 
 python %RECIPE_DIR%\fix_emscripten_config.py
@@ -25,4 +26,3 @@ IF ERRORLEVEL 1 EXIT 1
 CD %LIBRARY_PREFIX%\lib\emscripten-%PKG_VERSION%\
 npm install
 IF ERRORLEVEL 1 EXIT 1
-
