@@ -25,8 +25,8 @@ build:
   number: 3
   string: h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
   ignore_run_exports_from:
-    - python
-    - nodejs
+    - python *
+    - nodejs *
 
 requirements:
   build:
