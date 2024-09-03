@@ -57,7 +57,7 @@ requirements:
 test:
   requires:
     # test that we can co-install with another python than above
-    - python 3.10
+    - python ==3.10.*
   files:
     - testfile.c
   commands:
