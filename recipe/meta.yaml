@@ -2,6 +2,8 @@
 
 # we only want a single python, but not make the package noarch
 {% set min_python = "3.9" %}
+# we just use a version here; doesn't seem to have much impact
+{% set min_nodejs = "18" %}
 
 package:
   name: emscripten
@@ -21,10 +23,11 @@ source:
 
 build:
   number: 0
-  skip: true  # [nodejs != 22]
   ignore_run_exports_from:
     # needs asterisk because otherwise smithy thinks "multiple python"
     - python *
+    # same for nodejs
+    - nodejs *
 
 requirements:
   build:
@@ -33,7 +36,7 @@ requirements:
   host:
     - python {{ min_python }}
     - binaryen
-    - nodejs
+    - nodejs {{ min_nodejs }}
     - lld
     - clang
     - clangxx
@@ -41,7 +44,7 @@ requirements:
   run:
     - python *
     - {{ pin_compatible("binaryen", max_pin="x") }}
-    - nodejs
+    - nodejs >={{ min_nodejs }}
     - lld
     - clang
     - clangxx
