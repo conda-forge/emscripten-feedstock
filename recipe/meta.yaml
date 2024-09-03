@@ -32,8 +32,8 @@ requirements:
   build:
     - {{ compiler('cxx') }}  # node modules need to compile native extensions
     - {{ stdlib("c") }}
-  host:
     - python {{ min_python }}
+  host:
     - binaryen
     - nodejs {{ min_nodejs }}
     - lld
