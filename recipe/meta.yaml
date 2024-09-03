@@ -1,5 +1,8 @@
 {% set version = "3.1.58" %}
 
+# we only want a single python, but not make the package noarch
+{% set min_python = "3.9" %}
+
 package:
   name: emscripten
   version: {{ version }}
@@ -19,13 +22,16 @@ source:
 build:
   number: 0
   skip: true  # [nodejs != 22]
+  ignore_run_exports_from:
+    # needs asterisk because otherwise smithy thinks "multiple python"
+    - python *
 
 requirements:
   build:
     - {{ compiler('cxx') }}  # node modules need to compile native extensions
     - {{ stdlib("c") }}
   host:
-    - python
+    - python {{ min_python }}
     - binaryen
     - nodejs
     - lld
@@ -33,7 +39,7 @@ requirements:
     - clangxx
     - llvm-tools
   run:
-    - python
+    - python *
     - {{ pin_compatible("binaryen", max_pin="x") }}
     - nodejs
     - lld
@@ -42,6 +48,9 @@ requirements:
     - llvm-tools
     # for google closure compiler
     - zlib
+  run_constrained:
+    # otherwise linter complains (no py-constraints on non-noarch)
+    - python >={{ min_python }}
 
 test:
   files:
