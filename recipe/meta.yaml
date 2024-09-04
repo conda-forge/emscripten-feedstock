@@ -4,10 +4,6 @@
 {% set min_python = "3.9" %}
 # we just use a version here; doesn't seem to have much impact
 {% set min_nodejs = "18" %}
-# smithy will pick up `- python` and think we're doing multiple builds,
-# even if it occurs only under `ignore_run_exports_from:`
-{% set nameless_python = "python" %}
-{% set nameless_nodejs = "nodejs" %}
 
 package:
   name: emscripten
@@ -26,19 +22,18 @@ source:
     - patches/0006-Make-RTLD_LOCAL-work-correctly-for-preloaded-DSOs-21.patch
 
 build:
-  number: 2
-  ignore_run_exports:
-    # needs indirection, otherwise smithy thinks "multiple python"
-    - {{ nameless_python }}
-    # same for nodejs
-    - {{ nameless_nodejs }}
+  number: 3
+  string: h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
+  ignore_run_exports_from:
+    - python *
+    - nodejs *
 
 requirements:
   build:
     - {{ compiler('cxx') }}  # node modules need to compile native extensions
     - {{ stdlib("c") }}
-  host:
     - python {{ min_python }}
+  host:
     - binaryen
     - nodejs {{ min_nodejs }}
     - lld
@@ -60,6 +55,9 @@ requirements:
     - python >={{ min_python }}
 
 test:
+  requires:
+    # test that we can co-install with another python than above
+    - python ==3.10.*
   files:
     - testfile.c
   commands:
