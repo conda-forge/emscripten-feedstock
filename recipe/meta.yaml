@@ -1,4 +1,4 @@
-{% set version = "3.1.58" %}
+{% set version = "3.1.66" %}
 
 # we only want a single python, but not make the package noarch
 {% set min_python = "3.9" %}
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://github.com/emscripten-core/emscripten/archive/{{ version }}.tar.gz
-  sha256: 45a6536b25df8f3bf62e0f415e389671108b02a49b33bd91134b2da7e87bab65
+  sha256: 1b9f26c29c64dcab019d6825adeb1f6c5b99aa134898b38b09c0af894479030b
   patches:
     # from https://github.com/pyodide/pyodide/tree/main/emsdk/patches
     - patches/0001-Add-back-fs.findObject-and-fs.readFile-in-loadLibDat.patch
@@ -22,7 +22,7 @@ source:
     - patches/0006-Make-RTLD_LOCAL-work-correctly-for-preloaded-DSOs-21.patch
 
 build:
-  number: 3
+  number: 0
   string: h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
   ignore_run_exports_from:
     - python *
