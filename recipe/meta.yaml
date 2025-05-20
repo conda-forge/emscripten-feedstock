@@ -1,7 +1,7 @@
 {% set version = "3.1.58" %}
 
 # we only want a single python, but not make the package noarch
-{% set min_python = "3.9" %}
+# {% set min_python = "3.9" %}
 # we just use a version here; doesn't seem to have much impact
 {% set min_nodejs = "18" %}
 
@@ -32,7 +32,7 @@ requirements:
   build:
     - {{ compiler('cxx') }}  # node modules need to compile native extensions
     - {{ stdlib("c") }}
-    - python {{ min_python }}
+    - python
   host:
     - binaryen
     - nodejs {{ min_nodejs }}
@@ -52,12 +52,13 @@ requirements:
     - zlib
   run_constrained:
     # otherwise linter complains (no py-constraints on non-noarch)
-    - python >={{ min_python }}
+    - python
 
 test:
   requires:
     # test that we can co-install with another python than above
-    - python ==3.10.*
+    # - python ==3.10.*
+    - python
   files:
     - testfile.c
   commands:
