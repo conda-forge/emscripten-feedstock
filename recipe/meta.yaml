@@ -1,4 +1,6 @@
 {% set version = "3.1.58" %}
+{% set llvm_version = "19" %}
+# TODO: check what LLVM hash emscripten requires later on
 
 # we only want a single python, but not make the package noarch
 # {% set min_python = "3.9" %}
@@ -33,21 +35,23 @@ requirements:
     - {{ compiler('cxx') }}  # node modules need to compile native extensions
     - {{ stdlib("c") }}
     - python
+    # Need nodejs for build platform to run npm install during cross-compilation
+    - nodejs {{ min_nodejs }}  # [build_platform != target_platform]
   host:
     - binaryen
     - nodejs {{ min_nodejs }}
-    - lld
-    - clang
-    - clangxx
-    - llvm-tools
+    - lld {{ llvm_version }}.*
+    - clang {{ llvm_version }}.*
+    - clangxx {{ llvm_version }}.*
+    - llvm-tools {{ llvm_version }}.*
   run:
     - python *
     - {{ pin_compatible("binaryen", max_pin="x") }}
     - nodejs >={{ min_nodejs }}
-    - lld
-    - clang
-    - clangxx
-    - llvm-tools
+    - lld {{ llvm_version }}.*
+    - clang {{ llvm_version }}.*
+    - clangxx {{ llvm_version }}.*
+    - llvm-tools {{ llvm_version }}.*
     # for google closure compiler
     - zlib
   run_constrained:
