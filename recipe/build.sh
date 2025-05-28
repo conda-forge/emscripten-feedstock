@@ -17,26 +17,15 @@ emcc --generate-config
 
 python $RECIPE_DIR/fix_emscripten_config.py
 
-if [[ "${build_platform}" == "${target_platform}" ]]; then
-    pushd $PREFIX/lib/emscripten-$PKG_VERSION/
-    npm install
-    popd
-else
-    # some diagnostic output; remove after debugging
-    echo "We're skipping 'npm install' due to cross-compilation (${build_platform} -> ${target_platform})"
-fi
+pushd $PREFIX/lib/emscripten-$PKG_VERSION/
+npm install
+popd
 
 rm -rf $PREFIX/lib/emscripten-$PKG_VERSION/tests
 
-if [[ "${build_platform}" == "${target_platform}" ]]; then
-    # build the caches
-    echo "int main() {};" > asd.c
-    emcc asd.c
-    rm -f asd.c asd.js asd.wasm  # cleanup
-else
-    # some diagnostic output; remove after debugging
-    echo "We're skipping cache building due to cross-compilation (${build_platform} -> ${target_platform})"
-fi
+# build the caches
+echo "int main() {};" > asd.c
+emcc asd.c
 
 # We should probably not do this
 # embuilder build ALL
