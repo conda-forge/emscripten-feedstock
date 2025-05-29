@@ -20,33 +20,52 @@ with open(path, "r") as fi:
 is_cross_compiling = os.environ.get("CONDA_BUILD_CROSS_COMPILATION") == "1"
 build_platform = os.environ.get("build_platform", "")
 target_platform = os.environ.get("target_platform", "")
+build_prefix = os.environ.get("BUILD_PREFIX", "")
 
 print(f"Cross-compilation detected: {is_cross_compiling}")
 print(f"Build platform: {build_platform}, Target platform: {target_platform}")
+print(f"Build prefix: {build_prefix}")
 
 out_lines = ["import os"]
 for line in lines:
     if line.startswith("BINARYEN_ROOT"):
-        out_lines.append(f"BINARYEN_ROOT = '{prefix}' # directory\n")
+        p = prefix.replace("\\", "/")
+        out_lines.append(
+            "BINARYEN_ROOT = os.path.expanduser(os.getenv('BINARYEN', '{}')) # directory\n".format(
+                p
+            )
+        )
     elif line.startswith("LLVM_ROOT"):
-        llvm_root_path = os.path.join(prefix, "bin")
-        out_lines.append(f"LLVM_ROOT = '{llvm_root_path}'\n")
+        # For cross-compilation, use build platform's LLVM tools, not target platform's
+        if is_cross_compiling and build_prefix:
+            p = os.path.join(build_prefix, "bin").replace("\\", "/")
+            print(f"Cross-compilation: Using build platform LLVM tools from {p}")
+        else:
+            p = os.path.join(prefix, "bin").replace("\\", "/")
+            print(f"Native build: Using target platform LLVM tools from {p}")
 
-        # For cross-compilation, also explicitly verify the clang binary exists and is correct
-        if is_cross_compiling:
-            clang_path = os.path.join(llvm_root_path, "clang")
-            if os.path.exists(clang_path):
-                print(f"Verified clang exists at: {clang_path}")
-                try:
-                    import subprocess
-                    result = subprocess.run(
-                        ["file", clang_path], capture_output=True, text=True
-                    )
-                    print(f"Clang binary info: {result.stdout.strip()}")
-                except Exception as e:
-                    print(f"Could not check clang binary: {e}")
-            else:
-                print(f"WARNING: clang not found at expected path: {clang_path}")
+        out_lines.append(
+            "LLVM_ROOT = os.path.expanduser(os.getenv('LLVM', '{}'))\n".format(p)
+        )
+
+        # Verify the clang binary exists
+        test_clang_path = p.replace("$BUILD_PREFIX", build_prefix).replace(
+            "$PREFIX", prefix
+        )
+        clang_path = os.path.join(test_clang_path, "clang")
+        if os.path.exists(clang_path):
+            print(f"Verified clang exists at: {clang_path}")
+            try:
+                import subprocess
+
+                result = subprocess.run(
+                    ["file", clang_path], capture_output=True, text=True
+                )
+                print(f"Clang binary info: {result.stdout.strip()}")
+            except Exception as e:
+                print(f"Could not check clang binary: {e}")
+        else:
+            print(f"WARNING: clang not found at expected path: {clang_path}")
     else:
         out_lines.append(line)
 
