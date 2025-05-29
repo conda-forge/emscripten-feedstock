@@ -18,6 +18,8 @@ emcc --generate-config
 python $RECIPE_DIR/fix_emscripten_config.py
 
 pushd $PREFIX/lib/emscripten-$PKG_VERSION/
+echo "Checking node"
+file $(which node)
 npm install
 popd
 

@@ -5,7 +5,7 @@
 # we only want a single python, but not make the package noarch
 # {% set min_python = "3.9" %}
 # we just use a version here; doesn't seem to have much impact
-{% set min_nodejs = "18" %}
+{% set min_nodejs = "20" %}
 
 package:
   name: emscripten
