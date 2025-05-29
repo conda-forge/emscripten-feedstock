@@ -35,8 +35,7 @@ requirements:
     - {{ compiler('cxx') }}  # node modules need to compile native extensions
     - {{ stdlib("c") }}
     - python
-    # Need nodejs for build platform to run npm install during cross-compilation
-    - nodejs {{ min_nodejs }}  # [build_platform != target_platform]
+    - nodejs {{ min_nodejs }}
   host:
     - binaryen
     - nodejs {{ min_nodejs }}
