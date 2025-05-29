@@ -3,7 +3,7 @@ github:
   branch_name: main
   tooling_branch_name: main
 provider:
-  osx_arm64: github_actions
+  osx_arm64: azure
 conda_build:
   pkg_format: '2'
 build_platform:
