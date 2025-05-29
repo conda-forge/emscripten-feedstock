@@ -17,15 +17,13 @@ emcc --generate-config
 
 python $RECIPE_DIR/fix_emscripten_config.py
 
-echo "=== Post-fix configuration check ==="
-echo "Updated emscripten config file:"
-cat $PREFIX/lib/emscripten-$PKG_VERSION/.emscripten
-echo "=== End post-fix check ==="
-
 # Debug: Check what clang emscripten is trying to use
 echo "=== Debugging clang configuration ==="
 echo "PREFIX: $PREFIX"
 echo "BUILD_PREFIX: ${BUILD_PREFIX:-not set}"
+
+echo "Emscripten config file content:"
+cat $PREFIX/lib/emscripten-$PKG_VERSION/.emscripten || echo "Config file not found"
 
 echo "Testing emcc directly:"
 emcc --version || echo "emcc --version failed"
