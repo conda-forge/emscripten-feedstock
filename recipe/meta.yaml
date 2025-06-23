@@ -36,8 +36,9 @@ requirements:
     - {{ stdlib("c") }}
     - python
     - nodejs {{ min_nodejs }}
+    - file  # [unix]
   host:
-    - binaryen
+    - binaryen  117.*
     - lld {{ llvm_version }}.*
     - clang {{ llvm_version }}.*
     - clangxx {{ llvm_version }}.*

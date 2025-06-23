@@ -26,8 +26,10 @@ popd
 rm -rf $PREFIX/lib/emscripten-$PKG_VERSION/tests
 
 # build the caches
-echo "int main() {};" > asd.c
-emcc asd.c
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" != "1" or "$CROSSCOMPILING_EMULATOR" != "" ]]; then
+  echo "int main() {};" > asd.c
+  emcc asd.c
+fi
 
 # We should probably not do this
 # embuilder build ALL
