@@ -27,6 +27,7 @@ rm -rf $PREFIX/lib/emscripten-$PKG_VERSION/tests
 
 # build the caches
 if [[ "$CONDA_BUILD_CROSS_COMPILATION" != "1" || "$CROSSCOMPILING_EMULATOR" != "" ]]; then
+  export NODE_JS=$BUILD_PREFIX/bin/node
   echo "int main() {};" > asd.c
   emcc asd.c
 fi
