@@ -38,7 +38,6 @@ requirements:
     - nodejs {{ min_nodejs }}
   host:
     - binaryen
-    - nodejs {{ min_nodejs }}
     - lld {{ llvm_version }}.*
     - clang {{ llvm_version }}.*
     - clangxx {{ llvm_version }}.*
