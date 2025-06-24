@@ -24,6 +24,9 @@ for line in lines:
 	elif line.startswith("LLVM_ROOT"):
 		p = os.path.join(prefix, 'bin').replace('\\', '/')
 		out_lines.append("LLVM_ROOT = os.path.expanduser(os.getenv('LLVM', '{}'))\n".format(p))
+	elif line.startswith("NODE_JS"):
+		p = os.path.join(prefix, 'bin', 'node').replace('\\', '/')
+		out_lines.append("NODE_JS = os.path.expanduser(os.getenv('NODE_JS', '{}')) # executable\n".format(p))
 	else:
 		out_lines.append(line)
 

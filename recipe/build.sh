@@ -18,14 +18,19 @@ emcc --generate-config
 python $RECIPE_DIR/fix_emscripten_config.py
 
 pushd $PREFIX/lib/emscripten-$PKG_VERSION/
+echo "Checking node"
+file $(which node)
 npm install
 popd
 
 rm -rf $PREFIX/lib/emscripten-$PKG_VERSION/tests
 
 # build the caches
-echo "int main() {};" > asd.c
-emcc asd.c
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" != "1" || "$CROSSCOMPILING_EMULATOR" != "" ]]; then
+  export NODE_JS=$BUILD_PREFIX/bin/node
+  echo "int main() {};" > asd.c
+  emcc asd.c
+fi
 
 # We should probably not do this
 # embuilder build ALL
