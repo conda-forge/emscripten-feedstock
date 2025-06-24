@@ -38,6 +38,8 @@ requirements:
     - nodejs {{ min_nodejs }}
     - file  # [unix]
   host:
+    # Each escripten version expects a particular version of binaryen.
+    # If the binaryen version is different, emscripten issues a warning.
     - binaryen  117.*
     - lld {{ llvm_version }}.*
     - clang {{ llvm_version }}.*
