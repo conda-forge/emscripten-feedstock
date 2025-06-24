@@ -2,8 +2,6 @@
 {% set llvm_version = "19" %}
 # TODO: check what LLVM hash emscripten requires later on
 
-# we only want a single python, but not make the package noarch
-# {% set min_python = "3.9" %}
 # we just use a version here; doesn't seem to have much impact
 {% set min_nodejs = "20" %}
 
@@ -38,7 +36,7 @@ requirements:
     - nodejs {{ min_nodejs }}
     - file  # [unix]
   host:
-    # Each escripten version expects a particular version of binaryen.
+    # Each emscripten version expects a particular version of binaryen.
     # If the binaryen version is different, emscripten issues a warning.
     - binaryen  117.*
     - lld {{ llvm_version }}.*
@@ -55,15 +53,11 @@ requirements:
     - llvm-tools {{ llvm_version }}.*
     # for google closure compiler
     - zlib
-  run_constrained:
-    # otherwise linter complains (no py-constraints on non-noarch)
-    - python
 
 test:
   requires:
-    # test that we can co-install with another python than above
-    # - python ==3.10.*
-    - python
+    # test that we can still use python_min (i.e. haven't picked up too-tight constraint somehow)
+    - python {{ python_min }}.*
   files:
     - testfile.c
   commands:
