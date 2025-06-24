@@ -55,9 +55,10 @@ requirements:
     - zlib
 
 test:
-  requires:
-    # test that we can still use python_min (i.e. haven't picked up too-tight constraint somehow)
-    - python {{ python_min }}.*
+  # disabled due to https://github.com/conda/conda-libmamba-solver/issues/677
+  # requires:
+  #   # test that we can still use python_min (i.e. haven't picked up too-tight constraint somehow)
+  #   - python {{ python_min }}.*
   files:
     - testfile.c
   commands:
