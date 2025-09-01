@@ -8,4 +8,9 @@ conda_build:
   pkg_format: '2'
 build_platform:
   osx_arm64: osx_arm64
+remote_ci_setup:
+- conda-forge-ci-setup=4
+- conda-build>=24.1
+# https://github.com/conda/conda-libmamba-solver/issues/677
+- mamba>=2.3.2
 test: native_and_emulated
