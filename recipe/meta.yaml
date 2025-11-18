@@ -22,7 +22,7 @@ source:
     - patches/0006-Make-RTLD_LOCAL-work-correctly-for-preloaded-DSOs-21.patch
 
 build:
-  number: 4
+  number: 5
   string: h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}
   ignore_run_exports_from:
     - python *
@@ -55,10 +55,9 @@ requirements:
     - zlib
 
 test:
-  # disabled due to https://github.com/conda/conda-libmamba-solver/issues/677
-  # requires:
-  #   # test that we can still use python_min (i.e. haven't picked up too-tight constraint somehow)
-  #   - python {{ python_min }}.*
+  requires:
+    # test that we can still use python_min (i.e. haven't picked up too-tight constraint somehow)
+    - python {{ python_min }}.*
   files:
     - testfile.c
   commands:
