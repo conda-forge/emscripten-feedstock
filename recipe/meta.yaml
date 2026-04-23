@@ -1,5 +1,5 @@
 # TODO: check what LLVM hash emscripten requires later on
-{% set version = "4.0.9" %}
+{% set version = "4.0.21" %}
 {% set llvm_version = "21" %}
 
 # we just use a version here; doesn't seem to have much impact
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://github.com/emscripten-core/emscripten/archive/{{ version }}.tar.gz
-  sha256: 11a7d950453ee31da03ee3c3b261934ad3d7d2e470e41ea3222a13cecb9b98ef
+  sha256: 283d0e5496ce269296bf3cad39a44a1ea8c02160f7fc4e9051d4c34bf3bf07f6
 
 build:
   number: 0
