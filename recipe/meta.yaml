@@ -1,6 +1,6 @@
 # TODO: check what LLVM hash emscripten requires later on
-{% set version = "4.0.9" %}
-{% set llvm_version = "21" %}
+{% set version = "6.0.9" %}
+{% set llvm_version = "23" %}
 
 # we just use a version here; doesn't seem to have much impact
 {% set min_nodejs = "20" %}
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://github.com/emscripten-core/emscripten/archive/{{ version }}.tar.gz
-  sha256: 11a7d950453ee31da03ee3c3b261934ad3d7d2e470e41ea3222a13cecb9b98ef
+  sha256: f15e20d2b485f047fee35e5801cbf85be1edd696602c919d60f122f9d18d4529
 
 build:
   number: 0
@@ -29,7 +29,7 @@ requirements:
   host:
     # Each emscripten version expects a particular version of binaryen.
     # If the binaryen version is different, emscripten issues a warning.
-    - binaryen  117.*
+    - binaryen 132.*
     - lld {{ llvm_version }}.*
     - clang {{ llvm_version }}.*
     - clangxx {{ llvm_version }}.*

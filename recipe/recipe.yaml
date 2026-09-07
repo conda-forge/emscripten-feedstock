@@ -1,0 +1,78 @@
+# TODO: check what LLVM hash emscripten requires later on
+# we just use a version here; doesn't seem to have much impact
+schema_version: 1
+
+context:
+  version: "6.0.9"
+  llvm_version: 23
+  min_nodejs: 20
+
+package:
+  name: emscripten
+  version: ${{ version }}
+
+source:
+  url: https://github.com/emscripten-core/emscripten/archive/${{ version }}.tar.gz
+  sha256: f15e20d2b485f047fee35e5801cbf85be1edd696602c919d60f122f9d18d4529
+
+build:
+  number: 0
+  script:
+    - if: unix
+      then: build.sh
+    - if: win
+      then: build.bat
+
+requirements:
+  build:
+    - ${{ stdlib("c") }}
+    - python
+    - nodejs 20.*
+    - if: unix
+      then: file
+  host:
+    # Each emscripten version expects a particular version of binaryen.
+    # If the binaryen version is different, emscripten issues a warning.
+    - binaryen 132.*
+    - lld ${{ llvm_version }}.*
+    - clang ${{ llvm_version }}.*
+    - clangxx ${{ llvm_version }}.*
+    - llvm-tools ${{ llvm_version }}.*
+  run:
+    - python *
+    - ${{ pin_compatible("binaryen", upper_bound="x") }}
+    - nodejs >=${{ min_nodejs }}
+    - lld ${{ llvm_version }}.*
+    - clang ${{ llvm_version }}.*
+    - clangxx ${{ llvm_version }}.*
+    - llvm-tools ${{ llvm_version }}.*
+    # for google closure compiler
+    - zlib
+  ignore_run_exports:
+    from_package:
+      - python *
+      - nodejs *
+
+tests:
+  - files:
+      recipe:
+        - testfile.c
+    requirements:
+      run:
+        - python ${{ python_min }}.*
+    script:
+      - emcc --help
+      - emcc ./testfile.c
+      - node a.out.js
+
+about:
+  license: MIT OR NCSA OR MPL-2.0
+  license_file: LICENSE
+  summary: Emscripten compiles C and C++ to WebAssembly using LLVM and Binaryen. Emscripten output can run on the Web, in Node.js, and in wasm runtimes.
+  homepage: https://emscripten.org/
+  repository: https://github.com/emscripten-core/emscripten
+
+extra:
+  recipe-maintainers:
+    - wolfv
+    - h-vetinari
